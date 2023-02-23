@@ -65,7 +65,7 @@
 <!--                    <archive>-->
 <!--                        <manifest>-->
 <!--                            <addClasspath>true</addClasspath>-->
-<!--                            <mainClass>org.fetch.Main</mainClass>-->
+<!--                            <mainClass>org.fetch.FetchTest</mainClass>-->
 <!--                        </manifest>-->
 <!--                    </archive>-->
 <!--                </configuration>-->
@@ -91,7 +91,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.fetch.Main</mainClass>
+                                    <mainClass>org.fetch.FetchTest</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -105,7 +105,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.fetch.Main</mainClass>
+                            <mainClass>org.fetch.FetchTest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -9,18 +9,16 @@ import org.fetch.service.AccountingServiceImpl;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-public class Main {
+public class FetchTest {
     public static void main(String[] args) {
-        int amountToSpend = Integer.parseInt(args[0]);
+        int pointsToSpend = Integer.parseInt(args[0]);
         String filePath = args[1];
-        System.out.println(amountToSpend);
-        System.out.println(filePath);
 
         // parsing a CSV file into CSVReader class constructor
         CSVReader csvReader = null;
         try {
             csvReader = new CSVReader(new FileReader(filePath));
-            AccountingRequest request = new AccountingRequest(csvReader, amountToSpend);
+            AccountingRequest request = new AccountingRequest(csvReader, pointsToSpend);
             //todo: Guice injection
             AccountingService service = new AccountingServiceImpl();
             AccountingResponse response = service.calculatePoints(request);

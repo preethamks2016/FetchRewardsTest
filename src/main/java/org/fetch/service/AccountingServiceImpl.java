@@ -16,14 +16,36 @@ public class AccountingServiceImpl implements AccountingService {
     @Override
     public AccountingResponse calculatePoints(AccountingRequest request) {
         List<Transaction> inputTransactions = constructInputTransactions(request.getCsvReader());
+        // process the transactions - handle negative points by deducting them from other positive points (per payer)
         List<Transaction> processedTransactions = TransactionProcessor.process(inputTransactions);
-        Map<String, Integer> resultMap = spendAndDeductAmount(processedTransactions, request.getAmountToSpend());
+        Map<String, Integer> resultMap = spendPoints(processedTransactions, request.getPointsToSpend());
         return new AccountingResponse(new JSONObject(resultMap));
     }
 
-    private Map<String, Integer> spendAndDeductAmount(List<Transaction> transactions, int amountToSpend) {
-        Map<String, Integer> payerBalanceMap = new HashMap<>();
+    private Map<String, Integer> spendPoints(List<Transaction> transactions, int pointsToSpend) {
         // populate initial balances
+        Map<String, Integer> payerBalanceMap = populateTotalBalances(transactions);
+
+        // deduct amount starting from oldest transaction first
+        for (Transaction transaction : transactions) {
+            String payer = transaction.getPayer();
+            int tnxPoints = transaction.getPoints();
+            int payerBalance = payerBalanceMap.get(payer);
+            // spend all the points
+            if (pointsToSpend >= tnxPoints) {
+                // spend the amount and deduct from payer's total balance
+                pointsToSpend -= tnxPoints;
+                payerBalanceMap.put(transaction.getPayer(), payerBalance - tnxPoints);
+            } else {
+                payerBalanceMap.put(transaction.getPayer(), payerBalance - pointsToSpend);
+                break;
+            }
+        }
+        return payerBalanceMap;
+    }
+
+    private Map<String, Integer> populateTotalBalances(List<Transaction> transactions) {
+        Map<String, Integer> payerBalanceMap = new HashMap<>();
         for (Transaction transaction : transactions) {
             if (payerBalanceMap.containsKey(transaction.getPayer())) {
                 int currentBalance = payerBalanceMap.get(transaction.getPayer());
@@ -31,24 +53,6 @@ public class AccountingServiceImpl implements AccountingService {
                 payerBalanceMap.put(transaction.getPayer(), newBalance);
             } else {
                 payerBalanceMap.put(transaction.getPayer(), transaction.getPoints());
-            }
-        }
-
-        // deduct amount starting from oldest first
-        for (Transaction transaction : transactions) {
-            String payer = transaction.getPayer();
-            int tnxPoints = transaction.getPoints();
-            if (amountToSpend >= tnxPoints) {
-                // spend the amount and deduct from payer's total balance
-                amountToSpend -= tnxPoints;
-                int payerBalance = payerBalanceMap.get(payer);
-                int newBalance = payerBalance - tnxPoints;
-                payerBalanceMap.put(transaction.getPayer(), newBalance);
-            } else {
-                int payerBalance = payerBalanceMap.get(payer);
-                int newBalance = payerBalance - amountToSpend;
-                payerBalanceMap.put(transaction.getPayer(), newBalance);
-                break;
             }
         }
         return payerBalanceMap;
@@ -66,14 +70,9 @@ public class AccountingServiceImpl implements AccountingService {
                 int points = Integer.parseInt(nextLine[1]);
                 long timestamp = Instant.parse((nextLine[2])).toEpochMilli();
                 transactionList.add(new Transaction(payer, points, timestamp));
-//                System.out.print(payer);
-//                System.out.print(", ");
-//                System.out.print(amount);
-//                System.out.print(", ");
-//                System.out.print(ts);
-//                System.out.println(", ");
             }
         } catch (Exception e) {
+            System.out.println("Error while reading csv");
             e.printStackTrace();
         }
         return transactionList;
