@@ -26,20 +26,19 @@ assumptions:
 - Negative points are deducted from the other positive points starting from the oldest transaction first. This is kind of intuitive as it means that we try to first clear off the amounts outstanding for a longer period of time.
 - The points fit in the Integer limit.
 
+What are the advantages and disadvantages of your solution?
+
 Advantages:
 - Takes care of cases with negative transaction amounts. Also takes of cases where net cummulative amount per Payer at any point in time can be negative. (but the final cummulative amount is assumed to always be positive, as mentioned in the task description)
-- The code is written in a modular way using OOPs concepts, Classes, Interfaces, DTOs etc. allowing for easy future modifications. Using Singleton pattern wherever possible - for example getTransactionComparator() in AccountingUtils class.
+- The code is written in a modular way using OOPs concepts, Classes, Interfaces, DTOs, Utils etc. allowing for easy future modifications. Using Singleton pattern wherever possible - for example getTransactionComparator() in AccountingUtils class.
+
+
+Disadvantages:
+
 
 Give an example:
 
-Disadvantages:
-- Integer values are used assumin
 
-What are the advantages and disadvantages of your solution?
-- we dont know if we will encounter a -ve value later on
-- we know it is always positive
-- prioritising +ve payments over -ve payments
-- prioritising +ve payments irrespective of if we encountered a -ve payment before
 
 What has been a favorite school/personal project thus far? What about it that challenged you?
 Corporate project on kibana.
