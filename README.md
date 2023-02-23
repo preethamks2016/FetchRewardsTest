@@ -1,7 +1,8 @@
 # FetchRewardsTest
 Take home assessment as part of Fetch Rewards Summer 2023 internship
 
-Install Maven
+Install Maven: https://maven.apache.org/install.html
+
 
 From the project working directory
 Place the transactions.csv file in the working directory (FetchTest)
