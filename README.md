@@ -36,6 +36,7 @@ Run the below command to compile and execute the program:
 ```
 mvn compile exec:java -Dexec.mainClass="org.fetch.FetchTest" -Dexec.arguments="5000,transactions.csv"
 ```
+FetchTest.java is the main class of our program.
 We provide the 2 arguments using -Dexec.arguments flag:
 - pointsToSpend ("5000" in the above command)
 - CSV file name. ("transactions.csv" in the above command)
