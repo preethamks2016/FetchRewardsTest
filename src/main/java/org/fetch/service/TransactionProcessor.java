@@ -10,12 +10,9 @@ public class TransactionProcessor {
 
     public static List<Transaction> process(List<Transaction> transactionList) {
         transactionList.sort(getTransactionComparator());
-        printTransactionList(transactionList);
         // construct a Map of Payer with list of transactions per Payer in ascending order of timestamp
         Map<String, List<Transaction>> payerTransactionMap = buildPayerTransactionMap(transactionList);
-        List<Transaction> finalTransactionList = convertToSortedTnxList(payerTransactionMap);
-        printTransactionList(finalTransactionList);
-        return finalTransactionList;
+        return convertToSortedTnxList(payerTransactionMap);
     }
 
     private static Map<String, List<Transaction>> buildPayerTransactionMap(List<Transaction> transactionList) {
@@ -45,9 +42,7 @@ public class TransactionProcessor {
             }
 
         }
-        printPayerWiseTnxs(payerPositiveTransactionMap);
         handleNegativeTransactions(payerPositiveTransactionMap, payerNegativeSumMap);
-        printPayerWiseTnxs(payerPositiveTransactionMap);
         return payerPositiveTransactionMap;
     }
 
