@@ -16,7 +16,7 @@ public class AccountingServiceImpl implements AccountingService {
     @Override
     public AccountingResponse calculatePoints(AccountingRequest request) {
         List<Transaction> inputTransactions = constructInputTransactions(request.getCsvReader());
-        // process the transactions - handle negative points by deducting them from other positive points (per payer)
+        // process the transactions - remove negative points after deducting them from other positive points (per payer)
         List<Transaction> processedTransactions = TransactionProcessor.process(inputTransactions);
         Map<String, Integer> resultMap = spendPoints(processedTransactions, request.getPointsToSpend());
         return new AccountingResponse(new JSONObject(resultMap));
