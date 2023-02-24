@@ -20,7 +20,7 @@ public class AccountingUtils {
 
     public static void printTransactionList(List<Transaction> transactionList) {
         for (Transaction transaction : transactionList) {
-            System.out.println(transaction.getPayer() + ", " + transaction.getPoints());
+            System.out.println(transaction.getPayer() + ", " + transaction.getPoints() + ", " + transaction.getTimestamp());
         }
         System.out.println();
     }

@@ -55,4 +55,48 @@ The output JSON should appear above the ***BUILD SUCCESS*** message as shown her
 [INFO] ------------------------------------------------------------------------
 ```
 
+## Approach
+Using the example provided in the problem statement 
+We first make a list of transactions
+```
+List {
+DANNON, 300, 1604138400000
+UNILEVER, 200, 1604142000000
+DANNON, -200, 1604156400000
+MILLER COORS, 10000, 1604239200000
+DANNON, 1000, 1604325600000
+}
+```
+We sort this list and convert this into a HashMap with Payer as key. Refer class **TransactionProcessor**
+```
+// Map of positive transactions
+UNILEVER: 200, 
+MILLER COORS: 10000, 
+DANNON: 300, 1000
+// Map of negative values
+UNILEVER: 0, 
+MILLER COORS: 0, 
+DANNON: -200
+```
+We then deduct the negative points from the positive points. In this case for Dannon we subtract 200 from his oldest points of 300 resulting in 100.
+```
+ DANNON: 300, 1000 -> DANNON: 100, 1000
+```
+A final sorted list of transaction is generated
+```
+DANNON, 100, 1604138400000
+UNILEVER, 200, 1604142000000
+MILLER COORS, 10000, 1604239200000
+DANNON, 1000, 1604325600000
+```
+Points are spent starting from oldest timestamp. For 5000 spend points we use 100 points from Dannon, 200 from Unilever and rest from Miller resulting in final balances of:
+Refer class: **AccountingService**
+```
+{
+    "UNILEVER": 0,
+    "MILLER COORS": 5300,
+    "DANNON": 1000
+}
+```
+
 Further details on details of the solution, choice of tools are summarised in the **summary.txt** file
