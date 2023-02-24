@@ -16,35 +16,34 @@ What are the advantages and disadvantages of your solution?
 refer Readme file for an example walkthrough of the approach used.
 We make the following assumptions in our solution:
 - The Net per Payer balance cannot be negative. (as already mentioned in the problem statement)
-- When we encounter a Negative points transaction, we remove it by deducting it from the other positive points starting
+- When we encounter a Negative points transaction, we remove it by deducting it from the other positive points of the Payer starting
 from the oldest positive transaction first. This is kind of intuitive as it means that we try to first clear off the
  points that are outstanding from a longer time.
 - The points and cumulative points can be stored as Integers
 
 Advantages:
 - Takes care of cases with negative transaction points.
-- Takes of cases where net cumulative amount per Payer at any point in time can be negative. (but the final cumulative
-amount is assumed to always be positive, as mentioned in the task description). This means we can even start with a
-negative points transaction as long as we have positive points later on.
+- Takes of cases where net cumulative amount per Payer at any point in time can be negative. (but we can assume that the final
+cumulative amount is always positive, as mentioned in the task description).
 - The code is written in a modular way using OOPs concepts, Classes, Interfaces, DTOs, Utils etc. allowing for easy
 extensibility/modifications. Using Singleton pattern wherever possible - for example getTransactionComparator() in
 AccountingUtils class.
 
 Disadvantages:
 - We use extra space in order to handle negative transactions. A HashMap with Payer as the key is required for removing
-the negative transactions from the list. (since we need to do it separately for each payer). This is required, otherwise
-negative cases cannot be handled correctly.
+the negative transactions from the list. (since we need to do it separately for each payer). This is required in order to
+correctly handle negative points scenarios.
 
 What has been a favorite school/personal project thus far? What about it that challenged you?
 - One of my corporate Projects while I worked at Flipkart is my favorite. The project involved building a dashboard which
 allowed clients to perform various activities including viewing logs for their respective applications adhering to
 Role Based Access Control. I had to integrate the dashboard with Kibana and ElasticSearch. I setup a multi-node Elasticsearch
-and Kibana cluster and setup Nginx Reverse proxy gateways to redirect the calls which were made for logging to Kibana.
-We first forwarded these calls to an authentication service used web Cookies to authenticate the users. We needed an
+and Kibana cluster and setup Nginx Reverse proxy gateways to redirect the API calls for authentication purposes.
+We first forwarded these calls to an authentication service and used web Cookies to authenticate the users. We needed an
 extra layer of security to verify that the calls going from Kibana to Elasticsearch were also isolated for the clients.
-This was challenging as there were lot of unknowns such as figuring out how to pass on the cookies from the dashboard to
-kibana and inturn to elasticsearch. It also required evaluating dozens of API calls made by Kibana, intercepting these
-network calls and adding rules in place for authentication.
+This was challenging as there were a lot of unknowns such as figuring out how to pass on the cookies from the dashboard to
+kibana and inturn to elasticsearch. It also required evaluating dozens of API calls made by Kibana to Elasticsearch,
+intercepting these network calls and adding rules in place for authentication.
 
 - My favorite school project was a term project at UW-Madison as part of Big Data Systems course. This involved studying
 storage systems for different Machine Learning Workloads. We Benchmarked the performance of 2 storage systems - MinIo and HDF5,
