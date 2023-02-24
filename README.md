@@ -37,9 +37,9 @@ Run the below command to compile and execute the program:
 mvn compile exec:java -Dexec.mainClass="org.fetch.FetchTest" -Dexec.arguments="5000,transactions.csv"
 ```
 We provide the 2 arguments using -Dexec.arguments flag:
-- pointsToSpend (5000 in the above command)
-- CSV file name. (transactions.csv in the above command)
-- 
+- pointsToSpend ("5000" in the above command)
+- CSV file name. ("transactions.csv" in the above command)
+
 The output JSON should appear above the ***BUILD SUCCESS*** message as shown here:
 ```
 {
@@ -54,3 +54,5 @@ The output JSON should appear above the ***BUILD SUCCESS*** message as shown her
 [INFO] Finished at: 2023-02-23T05:42:21-06:00
 [INFO] ------------------------------------------------------------------------
 ```
+
+Further details on details of the solution, choice of tools are summarised in the **summary.txt** file

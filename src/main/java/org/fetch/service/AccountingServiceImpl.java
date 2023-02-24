@@ -15,6 +15,7 @@ import java.util.Map;
 public class AccountingServiceImpl implements AccountingService {
     @Override
     public AccountingResponse calculatePoints(AccountingRequest request) {
+        // create a list of transactions from the CSV
         List<Transaction> inputTransactions = constructInputTransactions(request.getCsvReader());
         // process the transactions - remove negative points after deducting them from other positive points (per payer)
         List<Transaction> processedTransactions = TransactionProcessor.process(inputTransactions);
@@ -26,7 +27,7 @@ public class AccountingServiceImpl implements AccountingService {
         // populate initial balances
         Map<String, Integer> payerBalanceMap = populateTotalBalances(transactions);
 
-        // deduct amount starting from oldest transaction first
+        // Iterate over the transactions starting from the oldest transaction first and deduct points
         for (Transaction transaction : transactions) {
             String payer = transaction.getPayer();
             int tnxPoints = transaction.getPoints();
@@ -58,6 +59,7 @@ public class AccountingServiceImpl implements AccountingService {
         return payerBalanceMap;
     }
 
+    // creates a list of transactions from the CSV
     private List<Transaction> constructInputTransactions(CSVReader csvReader) {
         List<Transaction> transactionList = new ArrayList<>();
         try {

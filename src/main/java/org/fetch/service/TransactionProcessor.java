@@ -34,7 +34,7 @@ public class TransactionProcessor {
                     payerPositiveTransactionMap.put(transaction.getPayer(), list);
                 }
             } else {
-                // if negative accumulate the negative
+                // if negative then accumulate the negative points for that payer
                 if (payerNegativeSumMap.containsKey(transaction.getPayer())) {
                     int negativeSum = payerNegativeSumMap.get(transaction.getPayer());
                     negativeSum -= transaction.getPoints();
