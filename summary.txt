@@ -40,7 +40,14 @@ What has been a favorite school/personal project thus far? What about it that ch
 allowed clients to perform various activities including viewing logs for their respective applications adhering to
 Role Based Access Control. I had to integrate the dashboard with Kibana and ElasticSearch. I setup a multi-node Elasticsearch
 and Kibana cluster and setup Nginx Reverse proxy gateways to redirect the calls which were made for logging to Kibana.
-We first forwarded these calls to an authentication service used web Cookies to authenticate the users. We needed an extra layer of security to verify that the calls going from Kibana to Elasticsearch were also isolated for the clients. This was challenging as there were lot of unknowns such as figuring out how to pass on the cookies from the dashboard to kibana and inturn to elasticsearch. It also required evaluating dozens of API calls made by Kibana, intercepting these network calls and adding rules in place for authentication.
+We first forwarded these calls to an authentication service used web Cookies to authenticate the users. We needed an
+extra layer of security to verify that the calls going from Kibana to Elasticsearch were also isolated for the clients.
+This was challenging as there were lot of unknowns such as figuring out how to pass on the cookies from the dashboard to
+kibana and inturn to elasticsearch. It also required evaluating dozens of API calls made by Kibana, intercepting these
+network calls and adding rules in place for authentication.
 
 - My favorite school project was a term project at UW-Madison as part of Big Data Systems course. This involved studying
-storage systems for different Machine Learning Workloads. We Benchmarked the performance of 2 storage systems - MinIo and HDF5, for different ML workloads such as ResNet(Image data), BERT (text data, csv files), DLRM (embeddings, numerical data). Each of the models have different access patterns and data formats which significantly impacts the data loading times and inturn the iteration times. This project was challenging as there weren't many resources and documentation available for HDF5.
+storage systems for different Machine Learning Workloads. We Benchmarked the performance of 2 storage systems - MinIo and HDF5,
+for different ML workloads such as ResNet(Image data), BERT (text data, csv files), DLRM (embeddings, numerical data).
+Each of the models have different access patterns and data formats which significantly impacts the data loading times and
+inturn the iteration times. This project was challenging as there weren't many resources and documentation available for HDF5.
