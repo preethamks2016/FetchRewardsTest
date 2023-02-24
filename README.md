@@ -78,9 +78,9 @@ UNILEVER: 0,
 MILLER COORS: 0, 
 DANNON: -200
 ```
-We then deduct the negative points from the positive points. In this case for Dannon we subtract 200 from his oldest points of 300 resulting in 100.
+We then deduct the negative points from the positive points starting from oldest positive transaction first. In this case for Dannon we subtract 200 from his oldest points of 300 resulting in 100.
 ```
- DANNON: 300, 1000 -> DANNON: 100, 1000
+ DANNON: {300, 1000} -> DANNON: {100, 1000}
 ```
 A final sorted list of transaction is generated
 ```
@@ -89,8 +89,8 @@ UNILEVER, 200, 1604142000000
 MILLER COORS, 10000, 1604239200000
 DANNON, 1000, 1604325600000
 ```
-Points are spent starting from oldest timestamp. For 5000 spend points we use 100 points from Dannon, 200 from Unilever and rest from Miller resulting in final balances of:
-Refer class: **AccountingService**
+Refer class: **AccountingService**.
+Points are spent starting from oldest timestamp. For 5000 spend points we use 100 points from Dannon, 200 from Unilever and rest from Miller resulting in final balances as shown below:
 ```
 {
     "UNILEVER": 0,
@@ -99,4 +99,30 @@ Refer class: **AccountingService**
 }
 ```
 
-Further details on details of the solution, choice of tools are summarised in the **summary.txt** file
+### Edge Scenario
+Consider this example with points to spend as 500
+```agsl
+DANNON, 200, 1604138400000
+MILLER COORS, 10000, 1604152800000
+DANNON, -300, 1604156400000
+DANNON, 1000, 1604325600000
+```
+In a naive implementation Dannon's 200 points would be used first and the remaining 300 out of 500 points would be spent using Miller's points. 
+But this would be wrong since Dannon has negative points later on. In our approach since we process the payer wise transaction map we end up with:
+```agsl
+ DANNON: {200, 1000} -> DANNON: {900}
+```
+Processed sorted transaction list would then be:
+```agsl
+MILLER COORS, 10000, 1604152800000
+DANNON, 900, 1604325600000
+```
+Output:
+```agsl
+{
+    "MILLER COORS": 9500,
+    "DANNON": 900
+}
+```
+
+Further details of the solution, choice of tools are summarised in the **summary.txt** file
